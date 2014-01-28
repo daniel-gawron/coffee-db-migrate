@@ -1,10 +1,10 @@
 {
-  "name": "coffee-migrate",
-  "version": "0.1.7",
-  "author": "winton",
+  "name": "coffee-db-migrate",
+  "version": "0.1.0",
+  "author": "daniel-gawron",
   "repository": {
     "type": "git",
-    "url": "https://github.com/winton/coffee-migrate.git"
+    "url": "https://github.com/daniel-gawron/coffee-db-migrate.git"
   },
   "dependencies": {
     "coffee-script": "",

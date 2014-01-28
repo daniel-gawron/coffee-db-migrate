@@ -3,6 +3,7 @@
 migrate  = require("../lib/migrate")
 join     = require("path").join
 fs       = require("fs")
+storeStatusInDB = false
 
 # require an argument
 required = ->
@@ -61,7 +62,7 @@ Perform a migration in the given `direction`.
 @param {Number} direction
 ###
 performMigration = (direction, migrationName) ->
-  migrate "migrations/.migrate"
+  migrate "migrations/.migrate",undefined,undefined, storeStatusInDB
   migrations().forEach (path) ->
     mod = require(process.cwd() + "/" + path)
     migrate path, mod.up, mod.down
@@ -73,6 +74,10 @@ performMigration = (direction, migrationName) ->
   set.on "save", ->
     log "migration", "complete"
     process.exit()
+
+  set.on "error", ->
+      log "migration", "error"
+      process.exit()
 
   migrationPath = (if migrationName then join("migrations", migrationName) else migrationName)
   set[direction] null, migrationPath
@@ -88,7 +93,7 @@ usage = [
   ""
   "  Options:"
   ""
-  "     -c, --chdir <path>   change the working directory"
+  "     -c, --chdir <path>   change the working directory,--db"
   ""
   "  Commands:"
   ""
@@ -116,6 +121,8 @@ while args.length
       process.exit()
     when "-c", "--chdir"
       process.chdir cwd = required()
+    when "--db"
+      storeStatusInDB = true
     else
       if options.command
         options.args.push arg
