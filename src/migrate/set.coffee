@@ -115,7 +115,7 @@ Set::_migrate = (direction, fn, migrationName) ->
 
 		migration[direction] (err) =>
 			if @useDB
-				if err
+				if err || direction is "down"
 					@dbManager.removeMigration migration.title, ()->
 						next err, migrations.shift()
 				else
