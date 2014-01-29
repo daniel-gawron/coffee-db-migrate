@@ -151,7 +151,7 @@ Set::_migrate = (direction, fn, migrationName) ->
 					migrationPos = positionOfMigration(migrations, migrationName)
 					if migrationPos == -1
 						if direction is "up"
-							console.error "Could not find migration, or migration is allready migrated: " + migrationName
+							console.error "Could not find migration, or migration is already migrated: " + migrationName
 						else
 							console.error "Could not find migration for revert in db: " + migrationName
 						@dbManager.releaseMigration ()=>
